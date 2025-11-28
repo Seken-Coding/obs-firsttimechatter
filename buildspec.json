@@ -33,13 +33,13 @@
     },
     "platformConfig": {
         "macos": {
-            "bundleId": "com.example.plugintemplate-for-obs"
+            "bundleId": "com.sekencoding.obs-firsttimechatter"
         }
     },
-    "name": "plugintemplate-for-obs",
-    "displayName": "Plugin Template for OBS",
+    "name": "obs-firsttimechatter",
+    "displayName": "First-Time Chatter Dock for OBS",
     "version": "1.0.0",
-    "author": "Your Name Here",
-    "website": "https://example.com",
-    "email": "me@example.com"
+    "author": "Seken Coding",
+    "website": "https://github.com/Seken-Coding/obs-firsttimechatter",
+    "email": "support@example.com"
 }
