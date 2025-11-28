@@ -26,6 +26,12 @@ with this program. If not, see <https://www.gnu.org/licenses/>
 #include <QSettings>
 #include <QFont>
 
+// Status indicator emoji constants
+static const QString STATUS_CONNECTED = QString::fromUtf8("\U0001F7E2");    // Green circle
+static const QString STATUS_CONNECTING = QString::fromUtf8("\U0001F7E1");   // Yellow circle
+static const QString STATUS_DISCONNECTED = QString::fromUtf8("\u26AB");     // Black circle
+static const QString STATUS_ERROR = QString::fromUtf8("\U0001F534");        // Red circle
+
 FirstTimeChatterDock::FirstTimeChatterDock(QWidget *parent)
 	: QFrame(parent),
 	  m_ircClient(new TwitchIRCClient(this)),
@@ -67,7 +73,7 @@ void FirstTimeChatterDock::setupUI()
 	titleFont.setPointSize(14);
 	m_titleLabel->setFont(titleFont);
 
-	m_statusLabel = new QLabel(QString::fromUtf8("\u26AB"), this); // Black circle
+	m_statusLabel = new QLabel(STATUS_DISCONNECTED, this);
 	m_statusLabel->setToolTip("Disconnected");
 
 	headerLayout->addWidget(m_titleLabel);
@@ -198,15 +204,15 @@ void FirstTimeChatterDock::checkDailyReset()
 void FirstTimeChatterDock::updateConnectionStatus()
 {
 	if (m_isConnected) {
-		m_statusLabel->setText(QString::fromUtf8("\U0001F7E2")); // Green circle
+		m_statusLabel->setText(STATUS_CONNECTED);
 		m_statusLabel->setToolTip("Connected");
 		m_connectButton->setText("Disconnect");
 	} else if (m_isConnecting) {
-		m_statusLabel->setText(QString::fromUtf8("\U0001F7E1")); // Yellow circle
+		m_statusLabel->setText(STATUS_CONNECTING);
 		m_statusLabel->setToolTip("Connecting...");
 		m_connectButton->setText("Cancel");
 	} else {
-		m_statusLabel->setText(QString::fromUtf8("\u26AB")); // Black circle
+		m_statusLabel->setText(STATUS_DISCONNECTED);
 		m_statusLabel->setToolTip("Disconnected");
 		m_connectButton->setText("Connect");
 	}
@@ -310,7 +316,7 @@ void FirstTimeChatterDock::onIRCConnectionError(const QString &error)
 {
 	m_isConnecting = false;
 	m_isConnected = false;
-	m_statusLabel->setText(QString::fromUtf8("\U0001F534")); // Red circle
+	m_statusLabel->setText(STATUS_ERROR);
 	m_statusLabel->setToolTip("Error: " + error);
 	m_connectButton->setText("Connect");
 }
